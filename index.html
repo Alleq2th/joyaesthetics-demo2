@@ -3,18 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JOYAESTHETICS | Client Growth System</title>
+<title>JOYAESTHETICS | Client Intelligence System</title>
 
 <style>
 body{
 margin:0;
 font-family:Arial;
-background:linear-gradient(135deg,#0b0b0f,#151522);
-color:#fff;
+background: radial-gradient(circle at top, #0b0b0f, #050507);
+color:#f5f1e8;
 overflow-x:hidden;
 }
 
-/* SCREENS */
+/* SCREEN SYSTEM */
 .screen{
 display:none;
 height:100vh;
@@ -22,20 +22,21 @@ justify-content:center;
 align-items:center;
 flex-direction:column;
 text-align:center;
-padding:25px;
+padding:30px;
 }
 .active{display:flex;}
 
-/* CARD */
+/* LUXURY CARD */
 .card{
-background:rgba(255,255,255,0.06);
+background:rgba(255,255,255,0.05);
 backdrop-filter: blur(12px);
-padding:25px;
-border-radius:16px;
-width:90%;
-max-width:450px;
-box-shadow:0 0 60px rgba(0,0,0,0.5);
-animation:fade .4s ease;
+border:1px solid rgba(200,162,74,0.2);
+padding:28px;
+border-radius:18px;
+width:92%;
+max-width:480px;
+box-shadow:0 0 80px rgba(0,0,0,0.6);
+animation:fade .5s ease;
 }
 
 @keyframes fade{
@@ -44,11 +45,11 @@ to{opacity:1;transform:translateY(0);}
 }
 
 /* INPUTS */
-input,textarea,select{
+input,textarea{
 width:100%;
 padding:12px;
 margin-top:10px;
-border-radius:8px;
+border-radius:10px;
 border:none;
 outline:none;
 background:#111;
@@ -57,40 +58,52 @@ color:#fff;
 
 /* BUTTONS */
 button{
+width:100%;
 padding:14px;
+margin-top:12px;
 border:none;
 border-radius:10px;
 cursor:pointer;
-margin-top:12px;
 font-weight:bold;
-transition:0.2s;
-width:100%;
+transition:0.25s;
 }
 
 button:hover{transform:scale(1.03);}
 
-.primary{background:#fff;color:#000;}
-.dark{background:#222;color:#fff;}
+.primary{
+background:linear-gradient(90deg,#c8a24a,#f5e6b3);
+color:#111;
+}
+
+.dark{
+background:#1b1b22;
+color:#fff;
+}
+
+/* HEADER TEXT */
+h1,h2{
+letter-spacing:1px;
+}
 
 /* ADMIN */
 #admin{
 position:fixed;
 right:0;
 top:0;
-width:320px;
+width:340px;
 height:100vh;
-background:#0f0f15;
-overflow:auto;
+background:#0b0b0f;
+border-left:1px solid rgba(200,162,74,0.2);
 padding:15px;
+overflow:auto;
 display:none;
-border-left:1px solid rgba(255,255,255,0.1);
 }
 
 .lead{
-background:#1c1c28;
+background:#15151d;
 padding:10px;
 margin-bottom:10px;
-border-radius:8px;
+border-radius:10px;
 font-size:12px;
 }
 
@@ -101,8 +114,8 @@ font-size:12px;
 position:fixed;
 bottom:20px;
 right:20px;
-background:#fff;
-color:#000;
+background:#c8a24a;
+color:#111;
 padding:12px;
 border-radius:10px;
 display:none;
@@ -114,40 +127,43 @@ max-width:260px;
 
 <body>
 
-<!-- LANDING -->
+<!-- LUXURY INTRO -->
 <div id="home" class="screen active">
-<h1>JOYAESTHETICS SYSTEM</h1>
-<p>Client acquisition & styling request automation system built for scaling fashion brands</p>
-<button class="primary" onclick="go('form')">Open Client Request System</button>
+<h1>JOYAESTHETICS</h1>
+<p>Client Intelligence & Styling Experience System</p>
+<p style="opacity:0.7;max-width:500px;">
+A structured system designed to transform styling requests into organized client experiences, follow-ups, and conversion-ready styling journeys.
+</p>
+<button class="primary" onclick="go('form')">Enter Client System</button>
 </div>
 
-<!-- FORM -->
+<!-- CLIENT REQUEST -->
 <div id="form" class="screen">
 <div class="card">
-<h2>Client Styling Request</h2>
+<h2>Request Styling Experience</h2>
 
-<textarea id="need" placeholder="What does the client need styled?"></textarea>
-<input id="occasion" placeholder="Occasion (Wedding, Party, Corporate...)">
-input id="budget" placeholder="Budget Range (₦ / $)">
-<input id="style" placeholder="Style Preference">
+<textarea id="need" placeholder="What would you like styled or prepared?"></textarea>
+<input id="occasion" placeholder="Occasion (Wedding, Event, Corporate...)">
+<input id="budget" placeholder="Budget Range">
+<input id="style" placeholder="Style Direction (Elegant, Bold, Minimal...)">
 
-<input id="name" placeholder="Client Name">
-<input id="email" placeholder="Client Email">
+<input id="name" placeholder="Full Name">
+<input id="email" placeholder="Email Address">
 
-<button class="primary" onclick="submitRequest()">Generate Styling Strategy</button>
+<button class="primary" onclick="submitRequest()">Generate Styling Intelligence</button>
 </div>
 </div>
 
 <!-- RESULT -->
 <div id="result" class="screen">
 <div class="card">
-<h2>Styling Strategy Generated</h2>
-<p id="output"></p>
-<button class="primary" onclick="go('home')">Back Home</button>
+<h2>Your Styling Intelligence Report</h2>
+<p id="output" style="text-align:left;white-space:pre-line;"></p>
+<button class="dark" onclick="go('home')">Back to Home</button>
 </div>
 </div>
 
-<!-- ADMIN -->
+<!-- ADMIN CRM -->
 <div id="admin"></div>
 
 <!-- NOTIFY -->
@@ -155,37 +171,61 @@ input id="budget" placeholder="Budget Range (₦ / $)">
 
 <script>
 
-let data={};
+let data = {};
 
+/* NAVIGATION */
 function go(id){
 document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
 document.getElementById(id).classList.add("active");
 }
 
-/* CORE STRATEGY ENGINE */
-function generateStrategy(d){
+/* CORE INTELLIGENCE ENGINE */
+function buildReport(d){
+
+let intent = "Medium";
+if(d.budget.includes("High") || d.budget.includes("500")) intent = "High";
+if(d.occasion.toLowerCase().includes("wedding")) intent = "High";
+
+let styleInsight = "";
+
+if(d.style.toLowerCase().includes("elegant"))
+styleInsight = "Elegant luxury positioning with refined minimal detailing.";
+
+if(d.style.toLowerCase().includes("bold"))
+styleInsight = "High-impact visual presence with statement styling direction.";
+
+if(d.style.toLowerCase().includes("minimal"))
+styleInsight = "Clean structured aesthetic with subtle luxury execution.";
+
 return `
-Client Styling Breakdown:
+CLIENT STYLING INTELLIGENCE REPORT
 
-• Request: ${d.need}
-• Occasion: ${d.occasion}
-• Budget: ${d.budget}
-• Style Direction: ${d.style}
+Client: ${d.name}
+Occasion: ${d.occasion}
+Budget: ${d.budget}
 
-Recommended Execution:
-- Curate outfit based on emotional tone of client request
-- Align styling with brand identity positioning
-- Ensure visual confidence impact for client’s environment
-- Prioritize fit, silhouette, and presence over trend
+STYLE DIRECTION:
+${styleInsight}
 
-System Insight:
-This client should be positioned as a "${d.style}" identity archetype.
+CLIENT INSIGHT LEVEL:
+${intent} conversion probability
 
-Action:
-Prepare curated outfit set + styling consultation follow-up.
+STRATEGIC RECOMMENDATION:
+- Prepare curated styling direction aligned with emotional identity
+- Focus on silhouette, presence, and impression value
+- Prioritize consistency with JOYAESTHETICS brand tone
+
+FOLLOW-UP SYSTEM:
+- Instant response message recommended
+- 24-hour follow-up suggested
+- Conversion closing message prepared
+
+SYSTEM NOTE:
+This client should be handled as a structured styling experience, not a one-time request.
 `;
 }
 
+/* SUBMIT */
 function submitRequest(){
 
 data.need=document.getElementById("need").value;
@@ -195,21 +235,21 @@ data.style=document.getElementById("style").value;
 data.name=document.getElementById("name").value;
 data.email=document.getElementById("email").value;
 
-if(!data.need || !data.name){
-alert("Complete required fields");
+if(!data.name || !data.need){
+alert("Please complete required fields");
 return;
 }
 
-let result = generateStrategy(data);
+let report = buildReport(data);
 
-/* SAVE */
+/* SAVE CRM */
 let leads = JSON.parse(localStorage.getItem("leads")||"[]");
-leads.push({...data,result,time:new Date().toLocaleString()});
+leads.push({...data,report,time:new Date().toLocaleString()});
 localStorage.setItem("leads",JSON.stringify(leads));
 
-document.getElementById("output").innerText = result;
+document.getElementById("output").innerText = report;
 
-notify("New styling request captured & logged into system");
+notify("Client request captured & structured successfully");
 
 loadAdmin();
 go("result");
@@ -223,7 +263,7 @@ n.style.display="block";
 setTimeout(()=>n.style.display="none",3000);
 }
 
-/* ADMIN (press A 5x) */
+/* ADMIN UNLOCK */
 let tap=0;
 document.addEventListener("keydown",(e)=>{
 if(e.key==="a"){
@@ -235,18 +275,20 @@ loadAdmin();
 }
 });
 
+/* CRM SYSTEM */
 function loadAdmin(){
 let leads=JSON.parse(localStorage.getItem("leads")||"[]");
 let box=document.getElementById("admin");
-box.innerHTML="<h3>Client Pipeline</h3>";
+
+box.innerHTML="<h3>Client CRM Pipeline</h3>";
 
 leads.reverse().forEach(l=>{
 box.innerHTML+=`
 <div class="lead">
 <b>${l.name}</b><br>
-${l.email}<br><br>
-${l.need}<br><br>
-<div class="small">${l.result}</div>
+${l.email}<br>
+${l.occasion} | ${l.budget}<br><br>
+<div class="small">${l.report}</div>
 <small>${l.time}</small>
 </div>
 `;
