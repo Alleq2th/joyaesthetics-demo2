@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Joy Luxury AI Stylist - Pro Demo</title>
+
+<style>
+body {
+margin:0;
+font-family: Arial, sans-serif;
+background: radial-gradient(circle at top, #1a1a25, #0b0b0f);
+color:white;
+overflow-x:hidden;
+}
+
+/* SCREENS */
+.screen {
+display:none;
+height:100vh;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+text-align:center;
+padding:20px;
+}
+
+.active { display:flex; }
+
+/* CARD */
+.card {
+background: rgba(255,255,255,0.05);
+backdrop-filter: blur(10px);
+padding:25px;
+border-radius:18px;
+width:90%;
+max-width:420px;
+box-shadow:0 0 60px rgba(255,255,255,0.06);
+animation:fade .4s ease;
+}
+
+@keyframes fade {
+from {opacity:0; transform:translateY(10px);}
+to {opacity:1; transform:translateY(0);}
+}
+
+/* BUTTONS */
+button {
+padding:14px 20px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+margin-top:10px;
+font-weight:bold;
+transition:0.25s;
+}
+
+button:hover { transform:scale(1.04); }
+
+.primary { background:white; color:black; }
+.darkbtn { background:#222230; color:white; }
+
+/* INPUTS */
+input {
+width:100%;
+padding:12px;
+margin-top:10px;
+border-radius:8px;
+border:none;
+outline:none;
+background:#111;
+color:white;
+}
+
+/* ADMIN */
+#admin {
+position:fixed;
+right:0;
+top:0;
+width:320px;
+height:100vh;
+background:#0f0f15;
+padding:15px;
+overflow:auto;
+display:none;
+border-left:1px solid rgba(255,255,255,0.1);
+}
+
+.lead {
+background:#1c1c28;
+padding:10px;
+border-radius:8px;
+margin-bottom:10px;
+font-size:12px;
+}
+
+.small {
+opacity:0.6;
+font-size:11px;
+}
+
+/* NOTIFICATION POPUP */
+#notify {
+position:fixed;
+bottom:20px;
+right:20px;
+background:white;
+color:black;
+padding:12px 15px;
+border-radius:10px;
+display:none;
+font-size:12px;
+max-width:260px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HOME -->
+<div id="home" class="screen active">
+<h1>JOY AI LUXURY STYLIST</h1>
+<p>Premium AI-powered styling system for high-end client experience</p>
+<button class="primary" onclick="go('g1')">Start Demo</button>
+</div>
+
+<!-- STEP 1 -->
+<div id="g1" class="screen">
+<div class="card">
+<h2>Choose Gender</h2>
+<button class="darkbtn" onclick="set('gender','Male')">Male</button>
+<button class="darkbtn" onclick="set('gender','Female')">Female</button>
+</div>
+</div>
+
+<!-- STEP 2 -->
+<div id="g2" class="screen">
+<div class="card">
+<h2>Event Type</h2>
+<button class="darkbtn" onclick="set('event','Wedding')">Wedding</button>
+<button class="darkbtn" onclick="set('event','Party')">Party</button>
+<button class="darkbtn" onclick="set('event','Corporate')">Corporate</button>
+<button class="darkbtn" onclick="set('event','Date Night')">Date Night</button>
+</div>
+</div>
+
+<!-- STEP 3 -->
+<div id="g3" class="screen">
+<div class="card">
+<h2>Budget Range</h2>
+<button class="darkbtn" onclick="set('budget','Low ($50-$150)')">Low</button>
+<button class="darkbtn" onclick="set('budget','Mid ($150-$500)')">Mid</button>
+<button class="darkbtn" onclick="set('budget','Luxury ($500+)')">Luxury</button>
+</div>
+</div>
+
+<!-- STEP 4 -->
+<div id="g4" class="screen">
+<div class="card">
+<h2>Style Identity</h2>
+<button class="darkbtn" onclick="set('style','Minimal Luxury')">Minimal Luxury</button>
+<button class="darkbtn" onclick="set('style','Bold Fashion')">Bold Fashion</button>
+<button class="darkbtn" onclick="set('style','Classic Elegant')">Classic Elegant</button>
+</div>
+</div>
+
+<!-- STEP 5 -->
+<div id="g5" class="screen">
+<div class="card">
+<h2>Client Details</h2>
+<input id="name" placeholder="Full Name">
+<input id="email" placeholder="Email Address">
+<button class="primary" onclick="generate()">Generate AI Styling Result</button>
+</div>
+</div>
+
+<!-- RESULT -->
+<div id="result" class="screen">
+<div class="card">
+<h2>AI Styling Result</h2>
+<p id="output"></p>
+<button class="primary" onclick="go('home')">New Client</button>
+</div>
+</div>
+
+<!-- ADMIN -->
+<div id="admin"></div>
+
+<!-- NOTIFY -->
+<div id="notify"></div>
+
+<script>
+
+let data = {};
+let steps = ["g1","g2","g3","g4","g5"];
+
+function go(id){
+document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+}
+
+function set(k,v){
+data[k]=v;
+let current = document.querySelector(".active").id;
+let i = steps.indexOf(current);
+if(i < steps.length-1) go(steps[i+1]);
+}
+
+/* AI STYLE ENGINE (FAKE BUT SMART FEEL) */
+function generateStyle(d){
+let mood = "";
+
+if(d.style.includes("Minimal")) mood += "Clean structured luxury outfit. ";
+if(d.style.includes("Bold")) mood += "High-impact statement fashion with strong presence. ";
+if(d.style.includes("Classic")) mood += "Timeless elegant styling with premium simplicity. ";
+
+if(d.event === "Wedding") mood += "Formal refined appearance suitable for ceremonial prestige. ";
+if(d.event === "Party") mood += "Stylish expressive look optimized for attention. ";
+if(d.event === "Corporate") mood += "Professional luxury presence with authority. ";
+if(d.event === "Date Night") mood += "Attractive soft luxury aesthetic with confidence. ";
+
+if(d.budget.includes("Luxury")) mood += "Recommended: premium designer-level outfit selection.";
+if(d.budget.includes("Mid")) mood += "Recommended: balanced luxury street blend.";
+if(d.budget.includes("Low")) mood += "Recommended: budget-optimized stylish combination.";
+
+return mood;
+}
+
+function generate(){
+
+data.name = document.getElementById("name").value;
+data.email = document.getElementById("email").value;
+
+if(!data.name || !data.email){
+alert("Fill all fields");
+return;
+}
+
+let result = generateStyle(data);
+
+document.getElementById("output").innerHTML =
+`<b>${data.name}</b><br><br>${result}`;
+
+/* SAVE LEADS */
+let leads = JSON.parse(localStorage.getItem("leads") || "[]");
+leads.push({...data, result, time:new Date().toLocaleString()});
+localStorage.setItem("leads", JSON.stringify(leads));
+
+/* NOTIFICATION */
+showNotify(`New VIP Client: ${data.name} (${data.event})`);
+
+loadAdmin();
+go("result");
+}
+
+/* NOTIFICATION POPUP */
+function showNotify(msg){
+let n = document.getElementById("notify");
+n.innerText = msg;
+n.style.display = "block";
+setTimeout(()=>n.style.display="none",3000);
+}
+
+/* ADMIN PANEL (hidden unlock: press A 5 times) */
+let tap=0;
+document.addEventListener("keydown",(e)=>{
+if(e.key==="a"){
+tap++;
+if(tap>=5){
+document.getElementById("admin").style.display="block";
+loadAdmin();
+}
+}
+});
+
+function loadAdmin(){
+let leads = JSON.parse(localStorage.getItem("leads") || "[]");
+let box = document.getElementById("admin");
+
+box.innerHTML = "<h3>Client Dashboard</h3>";
+
+leads.reverse().forEach(l=>{
+box.innerHTML += `
+<div class="lead">
+<b>${l.name}</b><br>
+${l.email}<br>
+${l.gender} | ${l.event}<br>
+${l.budget} | ${l.style}<br><br>
+<div class="small">${l.result}</div><br>
+${l.time}
+</div>
+`;
+});
+}
+
+</script>
+
+</body>
+</html>
