@@ -3,65 +3,48 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Joy Luxury AI Stylist - Pro Demo</title>
+<title>JOYAESTHETICS | Client Growth System</title>
 
 <style>
-body {
+body{
 margin:0;
-font-family: Arial, sans-serif;
-background: radial-gradient(circle at top, #1a1a25, #0b0b0f);
-color:white;
+font-family:Arial;
+background:linear-gradient(135deg,#0b0b0f,#151522);
+color:#fff;
 overflow-x:hidden;
 }
 
 /* SCREENS */
-.screen {
+.screen{
 display:none;
 height:100vh;
 justify-content:center;
 align-items:center;
 flex-direction:column;
 text-align:center;
-padding:20px;
+padding:25px;
 }
-
-.active { display:flex; }
+.active{display:flex;}
 
 /* CARD */
-.card {
-background: rgba(255,255,255,0.05);
-backdrop-filter: blur(10px);
+.card{
+background:rgba(255,255,255,0.06);
+backdrop-filter: blur(12px);
 padding:25px;
-border-radius:18px;
+border-radius:16px;
 width:90%;
-max-width:420px;
-box-shadow:0 0 60px rgba(255,255,255,0.06);
+max-width:450px;
+box-shadow:0 0 60px rgba(0,0,0,0.5);
 animation:fade .4s ease;
 }
 
-@keyframes fade {
-from {opacity:0; transform:translateY(10px);}
-to {opacity:1; transform:translateY(0);}
+@keyframes fade{
+from{opacity:0;transform:translateY(15px);}
+to{opacity:1;transform:translateY(0);}
 }
-
-/* BUTTONS */
-button {
-padding:14px 20px;
-border:none;
-border-radius:10px;
-cursor:pointer;
-margin-top:10px;
-font-weight:bold;
-transition:0.25s;
-}
-
-button:hover { transform:scale(1.04); }
-
-.primary { background:white; color:black; }
-.darkbtn { background:#222230; color:white; }
 
 /* INPUTS */
-input {
+input,textarea,select{
 width:100%;
 padding:12px;
 margin-top:10px;
@@ -69,44 +52,58 @@ border-radius:8px;
 border:none;
 outline:none;
 background:#111;
-color:white;
+color:#fff;
 }
 
+/* BUTTONS */
+button{
+padding:14px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+margin-top:12px;
+font-weight:bold;
+transition:0.2s;
+width:100%;
+}
+
+button:hover{transform:scale(1.03);}
+
+.primary{background:#fff;color:#000;}
+.dark{background:#222;color:#fff;}
+
 /* ADMIN */
-#admin {
+#admin{
 position:fixed;
 right:0;
 top:0;
 width:320px;
 height:100vh;
 background:#0f0f15;
-padding:15px;
 overflow:auto;
+padding:15px;
 display:none;
 border-left:1px solid rgba(255,255,255,0.1);
 }
 
-.lead {
+.lead{
 background:#1c1c28;
 padding:10px;
-border-radius:8px;
 margin-bottom:10px;
+border-radius:8px;
 font-size:12px;
 }
 
-.small {
-opacity:0.6;
-font-size:11px;
-}
+.small{opacity:0.6;font-size:11px;}
 
-/* NOTIFICATION POPUP */
-#notify {
+/* NOTIFY */
+#notify{
 position:fixed;
 bottom:20px;
 right:20px;
-background:white;
-color:black;
-padding:12px 15px;
+background:#fff;
+color:#000;
+padding:12px;
 border-radius:10px;
 display:none;
 font-size:12px;
@@ -117,69 +114,36 @@ max-width:260px;
 
 <body>
 
-<!-- HOME -->
+<!-- LANDING -->
 <div id="home" class="screen active">
-<h1>JOY AI LUXURY STYLIST</h1>
-<p>Premium AI-powered styling system for high-end client experience</p>
-<button class="primary" onclick="go('g1')">Start Demo</button>
+<h1>JOYAESTHETICS SYSTEM</h1>
+<p>Client acquisition & styling request automation system built for scaling fashion brands</p>
+<button class="primary" onclick="go('form')">Open Client Request System</button>
 </div>
 
-<!-- STEP 1 -->
-<div id="g1" class="screen">
+<!-- FORM -->
+<div id="form" class="screen">
 <div class="card">
-<h2>Choose Gender</h2>
-<button class="darkbtn" onclick="set('gender','Male')">Male</button>
-<button class="darkbtn" onclick="set('gender','Female')">Female</button>
-</div>
-</div>
+<h2>Client Styling Request</h2>
 
-<!-- STEP 2 -->
-<div id="g2" class="screen">
-<div class="card">
-<h2>Event Type</h2>
-<button class="darkbtn" onclick="set('event','Wedding')">Wedding</button>
-<button class="darkbtn" onclick="set('event','Party')">Party</button>
-<button class="darkbtn" onclick="set('event','Corporate')">Corporate</button>
-<button class="darkbtn" onclick="set('event','Date Night')">Date Night</button>
-</div>
-</div>
+<textarea id="need" placeholder="What does the client need styled?"></textarea>
+<input id="occasion" placeholder="Occasion (Wedding, Party, Corporate...)">
+input id="budget" placeholder="Budget Range (₦ / $)">
+<input id="style" placeholder="Style Preference">
 
-<!-- STEP 3 -->
-<div id="g3" class="screen">
-<div class="card">
-<h2>Budget Range</h2>
-<button class="darkbtn" onclick="set('budget','Low ($50-$150)')">Low</button>
-<button class="darkbtn" onclick="set('budget','Mid ($150-$500)')">Mid</button>
-<button class="darkbtn" onclick="set('budget','Luxury ($500+)')">Luxury</button>
-</div>
-</div>
+<input id="name" placeholder="Client Name">
+<input id="email" placeholder="Client Email">
 
-<!-- STEP 4 -->
-<div id="g4" class="screen">
-<div class="card">
-<h2>Style Identity</h2>
-<button class="darkbtn" onclick="set('style','Minimal Luxury')">Minimal Luxury</button>
-<button class="darkbtn" onclick="set('style','Bold Fashion')">Bold Fashion</button>
-<button class="darkbtn" onclick="set('style','Classic Elegant')">Classic Elegant</button>
-</div>
-</div>
-
-<!-- STEP 5 -->
-<div id="g5" class="screen">
-<div class="card">
-<h2>Client Details</h2>
-<input id="name" placeholder="Full Name">
-<input id="email" placeholder="Email Address">
-<button class="primary" onclick="generate()">Generate AI Styling Result</button>
+<button class="primary" onclick="submitRequest()">Generate Styling Strategy</button>
 </div>
 </div>
 
 <!-- RESULT -->
 <div id="result" class="screen">
 <div class="card">
-<h2>AI Styling Result</h2>
+<h2>Styling Strategy Generated</h2>
 <p id="output"></p>
-<button class="primary" onclick="go('home')">New Client</button>
+<button class="primary" onclick="go('home')">Back Home</button>
 </div>
 </div>
 
@@ -191,77 +155,75 @@ max-width:260px;
 
 <script>
 
-let data = {};
-let steps = ["g1","g2","g3","g4","g5"];
+let data={};
 
 function go(id){
 document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
 document.getElementById(id).classList.add("active");
 }
 
-function set(k,v){
-data[k]=v;
-let current = document.querySelector(".active").id;
-let i = steps.indexOf(current);
-if(i < steps.length-1) go(steps[i+1]);
+/* CORE STRATEGY ENGINE */
+function generateStrategy(d){
+return `
+Client Styling Breakdown:
+
+• Request: ${d.need}
+• Occasion: ${d.occasion}
+• Budget: ${d.budget}
+• Style Direction: ${d.style}
+
+Recommended Execution:
+- Curate outfit based on emotional tone of client request
+- Align styling with brand identity positioning
+- Ensure visual confidence impact for client’s environment
+- Prioritize fit, silhouette, and presence over trend
+
+System Insight:
+This client should be positioned as a "${d.style}" identity archetype.
+
+Action:
+Prepare curated outfit set + styling consultation follow-up.
+`;
 }
 
-/* AI STYLE ENGINE (FAKE BUT SMART FEEL) */
-function generateStyle(d){
-let mood = "";
+function submitRequest(){
 
-if(d.style.includes("Minimal")) mood += "Clean structured luxury outfit. ";
-if(d.style.includes("Bold")) mood += "High-impact statement fashion with strong presence. ";
-if(d.style.includes("Classic")) mood += "Timeless elegant styling with premium simplicity. ";
+data.need=document.getElementById("need").value;
+data.occasion=document.getElementById("occasion").value;
+data.budget=document.getElementById("budget").value;
+data.style=document.getElementById("style").value;
+data.name=document.getElementById("name").value;
+data.email=document.getElementById("email").value;
 
-if(d.event === "Wedding") mood += "Formal refined appearance suitable for ceremonial prestige. ";
-if(d.event === "Party") mood += "Stylish expressive look optimized for attention. ";
-if(d.event === "Corporate") mood += "Professional luxury presence with authority. ";
-if(d.event === "Date Night") mood += "Attractive soft luxury aesthetic with confidence. ";
-
-if(d.budget.includes("Luxury")) mood += "Recommended: premium designer-level outfit selection.";
-if(d.budget.includes("Mid")) mood += "Recommended: balanced luxury street blend.";
-if(d.budget.includes("Low")) mood += "Recommended: budget-optimized stylish combination.";
-
-return mood;
-}
-
-function generate(){
-
-data.name = document.getElementById("name").value;
-data.email = document.getElementById("email").value;
-
-if(!data.name || !data.email){
-alert("Fill all fields");
+if(!data.need || !data.name){
+alert("Complete required fields");
 return;
 }
 
-let result = generateStyle(data);
+let result = generateStrategy(data);
 
-document.getElementById("output").innerHTML =
-`<b>${data.name}</b><br><br>${result}`;
+/* SAVE */
+let leads = JSON.parse(localStorage.getItem("leads")||"[]");
+leads.push({...data,result,time:new Date().toLocaleString()});
+localStorage.setItem("leads",JSON.stringify(leads));
 
-/* SAVE LEADS */
-let leads = JSON.parse(localStorage.getItem("leads") || "[]");
-leads.push({...data, result, time:new Date().toLocaleString()});
-localStorage.setItem("leads", JSON.stringify(leads));
+document.getElementById("output").innerText = result;
 
-/* NOTIFICATION */
-showNotify(`New VIP Client: ${data.name} (${data.event})`);
+notify("New styling request captured & logged into system");
 
 loadAdmin();
 go("result");
 }
 
-/* NOTIFICATION POPUP */
-function showNotify(msg){
-let n = document.getElementById("notify");
-n.innerText = msg;
-n.style.display = "block";
+/* NOTIFY */
+function notify(msg){
+let n=document.getElementById("notify");
+n.innerText=msg;
+n.style.display="block";
 setTimeout(()=>n.style.display="none",3000);
 }
 
-/* ADMIN PANEL (hidden unlock: press A 5 times) */
+/* ADMIN (press A 5x) */
 let tap=0;
 document.addEventListener("keydown",(e)=>{
 if(e.key==="a"){
@@ -274,20 +236,18 @@ loadAdmin();
 });
 
 function loadAdmin(){
-let leads = JSON.parse(localStorage.getItem("leads") || "[]");
-let box = document.getElementById("admin");
-
-box.innerHTML = "<h3>Client Dashboard</h3>";
+let leads=JSON.parse(localStorage.getItem("leads")||"[]");
+let box=document.getElementById("admin");
+box.innerHTML="<h3>Client Pipeline</h3>";
 
 leads.reverse().forEach(l=>{
-box.innerHTML += `
+box.innerHTML+=`
 <div class="lead">
 <b>${l.name}</b><br>
-${l.email}<br>
-${l.gender} | ${l.event}<br>
-${l.budget} | ${l.style}<br><br>
-<div class="small">${l.result}</div><br>
-${l.time}
+${l.email}<br><br>
+${l.need}<br><br>
+<div class="small">${l.result}</div>
+<small>${l.time}</small>
 </div>
 `;
 });
